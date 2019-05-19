@@ -25,38 +25,54 @@ TARGET_CPU_ABI  := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := cortex-a53
 TARGET_ARCH_VARIANT := armv8-a
-TARGET_CPU_SMP := true
-ARCH_ARM_HAVE_TLS_REGISTER := true
+
+# Binder API version
+TARGET_USES_64_BIT_BINDER := true
 
 TARGET_BOARD_PLATFORM := msm8916
 
 TARGET_BOOTLOADER_BOARD_NAME := MSM8916
 TARGET_NO_BOOTLOADER := true
 
-BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom ehci-hcd.park=3 vmalloc=400M androidboot.bootdevice=7824900.sdhci movablecore=160M androidboot.selinux=permissive
+BOARD_KERNEL_CMDLINE := \
+    androidboot.bootdevice=7824900.sdhci \
+    androidboot.hardware=qcom \
+    ehci-hcd.park=3 \
+    vmalloc=400M \
+    movablecore=160M \
+    androidboot.selinux=permissive
 BOARD_KERNEL_BASE := 0x80000000
 BOARD_RAMDISK_OFFSET := 0x01000000
 BOARD_KERNEL_PAGESIZE := 2048
+BOARD_KERNEL_SEPARATED_DT := true
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000
 BOARD_KERNEL_IMAGE_NAME := zImage
 BOARD_CUSTOM_BOOTIMG_MK := $(VENDOR_PATH)/mkbootimg.mk
+TARGET_KERNEL_ARCH := arm
 TARGET_KERNEL_SOURCE := kernel/motorola/msm8916
 TARGET_RECOVERY_QCOM_RTC_FIX := true
 
-TARGET_RECOVERY_DEVICE_DIRS += $(VENDOR_PATH)
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
-TARGET_RECOVERY_FSTAB := device/motorola/msm8916-common/twrp.fstab
+TARGET_RECOVERY_FSTAB := $(VENDOR_PATH)/twrp.fstab
+TW_INCLUDE_FUSE_EXFAT       := true # exFAT support
+TW_INCLUDE_FUSE_NTFS        := true # NTFS support
+
 RECOVERY_SDCARD_ON_DATA := true
 
 # don't take forever to wipe
 BOARD_SUPPRESS_SECURE_ERASE := true
 
+# Keymaster
+TARGET_PROVIDES_KEYMASTER := true
+
 # Crypto
 TARGET_HW_DISK_ENCRYPTION := true
 TW_INCLUDE_CRYPTO := true
 TARGET_CRYPTFS_HW_PATH := vendor/qcom/opensource/commonsys/cryptfs_hw
+TARGET_KEYMASTER_WAIT_FOR_QSEE := true
+TARGET_LEGACY_HW_DISK_ENCRYPTION := true
 
 # TWRP
 TARGET_RECOVERY_PIXEL_FORMAT := RGB_565
@@ -65,4 +81,3 @@ RECOVERY_GRAPHICS_USE_LINELENGTH := true
 TW_SCREEN_BLANK_ON_BOOT := true
 TW_USE_TOOLBOX := true
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun%d/file
-
