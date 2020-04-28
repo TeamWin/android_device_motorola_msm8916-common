@@ -11,9 +11,9 @@ DTC = $(KERNEL_OUT)/scripts/dtc/dtc
 
 
 ## Build and run dtbtool
-DTBTOOL := $(TARGET_KERNEL_SOURCE)/tools/dtbtool/dtbtool
+DTBTOOL := $(LOCAL_PATH)/dtbtool/dtbtool
 $(DTBTOOL):
-	make -C $(TARGET_KERNEL_SOURCE)/tools/dtbtool
+	make -C $(LOCAL_PATH)/dtbtool
 
 INSTALLED_DTIMAGE_TARGET := $(PRODUCT_OUT)/dt.img
 
