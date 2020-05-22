@@ -19,3 +19,11 @@ on init
     symlink /firmware/image/keymaster.b02 /vendor/firmware/keymaster/keymaster.b02
     symlink /firmware/image/keymaster.b03 /vendor/firmware/keymaster/keymaster.b03
     symlink /firmware/image/keymaster.mdt /vendor/firmware/keymaster/keymaster.mdt
+
+on fs
+    wait /dev/block/platform/soc\.0/7824900\.sdhci
+    symlink /dev/block/platform/soc\.0/7824900\.sdhci /dev/block/bootdevice
+
+    setprop sys.usb.ffs.aio_compat 1
+    setprop persist.adb.nonblocking_ffs 0
+    setprop ro.adb.nonblocking_ffs 0
